@@ -1,29 +1,31 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Dimensions} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+
+const screen = Dimensions.get('window');
 
 export default class TaskBar extends Component {
     render(){
         return(
             <View style={styles.container}>
                 <View style={styles.menuContainer}>
-                <TouchableOpacity style={styles.menuBarIcon}>
-                    <Ionicons name="ios-home" size={32}/>
-                    <Text>Home</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuBarIcon}>
-                    <Ionicons name="ios-timer" size={32}/>
-                    <Text>Activity</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuBarIcon}>
-                    <Ionicons name="ios-search" size={32}/>
-                    <Text>Search</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuBarIcon}>
-                    <Ionicons name="ios-settings" size={32}/>
-                    <Text>Setting</Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity style={styles.menuBarIcon}>
+                        <Ionicons name="ios-home" size={32}/>
+                        <Text>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuBarIcon}>
+                        <Ionicons name="ios-timer" size={32}/>
+                        <Text>Activity</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuBarIcon}>
+                        <Ionicons name="ios-search" size={32}/>
+                        <Text>Search</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuBarIcon}>
+                        <Ionicons name="ios-settings" size={32}/>
+                        <Text>Setting</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -31,10 +33,11 @@ export default class TaskBar extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: 'black',
-        borderRadius: 45,
+        position: 'absolute',
+        bottom: 20,
+        backgroundColor: 'transparent',
+        width: screen.width,
+        alignItems: "center"
     },
     menuContainer: {
         flexDirection: 'row',
