@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 export default class Music extends Component {
     render() {
         return(
-            <View style={styles.container}><Icon name="ios-musical-notes" color="black" size={30}/></View>
+            <TouchableOpacity><View style={styles.container}><Icon name="ios-musical-notes" color="black" size={30}/></View></TouchableOpacity>
         )
     }
 }
