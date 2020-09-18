@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+const screen = Dimensions.get('window');
 export default class Choice extends Component {
   render() {
     const { title, color } = this.props;
@@ -15,7 +15,7 @@ export default class Choice extends Component {
 }
 const styles = StyleSheet.create({
   containerChoice: {
-    marginHorizontal: 20,
+    width: screen.width*0.9,
     height: 72,
     borderRadius: 15,
     marginBottom: 10,
