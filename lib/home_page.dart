@@ -7,15 +7,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Material(
-      color: Colors.white,
-      child: SingleChildScrollView(
+    return Scaffold(
+      appBar: CustomAppBar(
+        namePage: "Home",
+        height: size.height,
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(
-              namePage: "Home",
-              height: size.height,
-            ),
             EnterCode(),
             SingleChildScrollView(
               child: Column(
