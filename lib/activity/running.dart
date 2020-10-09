@@ -7,18 +7,7 @@ class Running extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        namePage: "Activity",
-        height: size.height,
-      ),
-      body: Column(
-        children: [
-          RunningActived(size: size),
-          ListRunning(size: size)
-        ],
-      ),
-    );
+    return ListRunning(size: size);
   }
 }
 
@@ -50,85 +39,3 @@ class ListRunning extends StatelessWidget {
   }
 }
 
-class RunningActived extends StatelessWidget {
-  const RunningActived({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
-
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 45,
-          child: Row(
-            children: [
-              FlatButton(
-                onPressed: () {},
-                child: Container(
-                  height: 40,
-                  width: size.width / 3,
-                  child: Stack(children: [
-                    Positioned(
-                      left: 25,
-                      top: 10,
-                      child: Image(
-                        image: AssetImage("assets/icons/hour_glass_1.png"),
-                      ),
-                    ),
-                    Positioned(
-                      top: 10,
-                      right: 25,
-                      child: Text(
-                        "Running",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: Container(
-                        width: 140,
-                        height: 5,
-                        decoration: BoxDecoration(color: Colors.orange),
-                      ),
-                    )
-                  ]),
-                ),
-              ),
-              FlatButton(
-                onPressed: () {},
-                child: Container(
-                  height: 40,
-                  width: size.width / 3,
-                  child: Stack(children: [
-                    Positioned(
-                      left: 20,
-                      top: 10,
-                      child: Image(
-                        image: AssetImage("assets/icons/clock 2.png"),
-                      ),
-                    ),
-                    Positioned(
-                      top: 10,
-                      right: 20,
-                      child: Text(
-                        "Completed",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ]),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}

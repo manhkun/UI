@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/appbar.dart';
 import 'package:quiztest/setting.dart';
 import 'home_page.dart';
 import 'search.dart';
-import 'activity/running.dart';
-import 'package:quiztest/play_screen/quiz_game.dart';
-import 'play_screen/end_quiz.dart';
+import 'activity/activity.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +27,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  final tabs = [HomePage(), Search(), Running(), Setting()];
+  final tabs = [HomePage(), Search(), Activity(), Setting()];
 
   @override
   Widget build(BuildContext context) {
@@ -126,3 +123,4 @@ Widget get _buildBottomNavigationBar {
     ),
   );
 }
+
