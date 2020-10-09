@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'category_card.dart';
+import 'alert_play.dart';
 
 class Categories extends StatelessWidget {
-  const Categories({
-    Key key,
-    @required this.size,
-    this.titleTopic
-  }) : super(key: key);
+  const Categories({Key key, @required this.size, this.titleTopic})
+      : super(key: key);
 
   final Size size;
   final String titleTopic;
@@ -47,30 +45,80 @@ class ListCategory extends StatelessWidget {
               imagePath: 'assets/images/solar.png',
               title: "Solar system",
               questionCount: 19,
+              press: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => PopUp(
+                          title: "Solar system",
+                          questionCount: 12,
+                          imagePath: "assets/images/solar.png",
+                          size: size,
+                        ));
+              },
             ),
             Category(
               size: size,
               imagePath: 'assets/images/solar.png',
               title: "Solar system",
               questionCount: 19,
+              press: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => PopUp(
+                          title: "Solar system",
+                          questionCount: 12,
+                          imagePath: "assets/images/solar.png",
+                          size: size,
+                        ));
+              },
             ),
             Category(
               size: size,
               imagePath: 'assets/images/solar.png',
               title: "Solar system",
               questionCount: 19,
+              press: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => PopUp(
+                          title: "Solar system",
+                          questionCount: 12,
+                          imagePath: "assets/images/solar.png",
+                          size: size,
+                        ));
+              },
             ),
             Category(
               size: size,
               imagePath: 'assets/images/solar.png',
               title: "Solar system",
               questionCount: 19,
+              press: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => PopUp(
+                          title: "Solar system",
+                          questionCount: 12,
+                          imagePath: "assets/images/solar.png",
+                          size: size,
+                        ));
+              },
             ),
             Category(
               size: size,
               imagePath: 'assets/images/solar.png',
               title: "Solar system",
               questionCount: 19,
+              press: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => PopUp(
+                          title: "Solar system",
+                          questionCount: 12,
+                          imagePath: "assets/images/solar.png",
+                          size: size,
+                        ));
+              },
             ),
           ],
         ));

@@ -5,20 +5,24 @@ class QuizGame extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: Column(
-        children: [
-          Pause(),
-          Question(
-            size: size,
-            question: "What is the largest planet in solar system?",
-            imagePath: "assets/images/solar.png",
-          ),
-          ListChoices(size: size),
-          Container(
-            padding: EdgeInsets.only(left: 20, top: 10),
-            alignment: Alignment.topLeft,
-            child: Image.asset("assets/icons/music.png"),)
-        ],
+      child: Material(
+        color: Colors.black,
+        child: Column(
+          children: [
+            Pause(),
+            Question(
+              size: size,
+              question: "What is the largest planet in solar system?",
+              imagePath: "assets/images/solar.png",
+            ),
+            ListChoices(size: size),
+            Container(
+              padding: EdgeInsets.only(left: 20, top: 10),
+              alignment: Alignment.topLeft,
+              child: Image.asset("assets/icons/music.png"),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -83,9 +87,9 @@ class Choice extends StatelessWidget {
         child: Text(
           choice,
           style: TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              decoration: TextDecoration.none),
+            color: Colors.white,
+            fontSize: 22,
+          ),
         ),
       ),
     );
@@ -118,8 +122,7 @@ class Question extends StatelessWidget {
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  decoration: TextDecoration.none),
+                  color: Colors.white,),
               textAlign: TextAlign.center,
             ),
           )
