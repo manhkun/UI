@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'dart:math';
 import 'alert_play.dart';
 import 'package:quiztest/models/models.dart';
 
@@ -11,7 +10,9 @@ class QuizCard extends StatelessWidget {
       this.imagePath,
       this.percent,
       @required this.quiz,
-      this.topic})
+      this.topic,
+      this.saveGameID,
+      this.ans})
       : super(key: key);
 
   final Size size;
@@ -19,6 +20,8 @@ class QuizCard extends StatelessWidget {
   final double percent;
   final Quiz quiz;
   final Topic topic;
+  final String saveGameID;
+  final List<int> ans;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +29,24 @@ class QuizCard extends StatelessWidget {
       onTap: () {
         showDialog(
             context: context,
-            builder: (context) => PopUp(
-                quiz: quiz,
-                imagePath:
-                    "https://storage.googleapis.com/quiz-010.appspot.com/" +
-                        quiz.key,
-                size: size,
-                topic: topic));
+            builder: (context) => saveGameID != null
+                ? Resume(
+                    quiz: quiz,
+                    size: size,
+                    imagePath:
+                        "https://storage.googleapis.com/quiz-010.appspot.com/" +
+                            quiz.key,
+                    topic: topic,
+                    answered: ans,
+                    saveGameID: saveGameID,
+                  )
+                : PopUp(
+                    quiz: quiz,
+                    imagePath:
+                        "https://storage.googleapis.com/quiz-010.appspot.com/" +
+                            quiz.key,
+                    size: size,
+                    topic: topic));
       },
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 10, left: 10),
@@ -97,7 +111,9 @@ class QuizCard extends StatelessWidget {
                       lineHeight: 20.0,
                       animationDuration: 2500,
                       percent: percent,
-                      center: Text("${(percent * 100).round()}% accuracy"),
+                      center: saveGameID != null
+                          ? Text("${(percent * 100).round()}% accuracy")
+                          : Text("${(percent * 100).round()}% correct"),
                       linearStrokeCap: LinearStrokeCap.roundAll,
                       progressColor: Colors.redAccent,
                     ),

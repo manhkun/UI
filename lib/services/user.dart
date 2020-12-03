@@ -16,8 +16,17 @@ class UserSave {
 
   Future<String> userName() async {
     final prefs = await SharedPreferences.getInstance();
-    String userID = await prefs.getString("userId");
+    String userID = prefs.getString("userId");
     var userName = await API_Manager().getUserName(userID);
     return userName;
+  }
+
+  Future<String> getUserID() async {
+    final prefs = await SharedPreferences.getInstance();
+    String userID = prefs.getString("userId");
+    return userID;
+  }
+  void saveUserNameToLocal() {
+    
   }
 }

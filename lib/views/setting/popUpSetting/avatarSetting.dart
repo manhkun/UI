@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class AvatarSetting extends StatefulWidget {
   const AvatarSetting({Key key}) : super(key: key);
 

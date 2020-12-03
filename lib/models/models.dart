@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Topic {
   final String name;
   final String key;
@@ -11,15 +9,13 @@ class Topic {
 }
 
 class Quiz {
-  final String creator;
   final String name;
   final int numberOfQuestion;
   final String key;
-  Quiz({this.creator, this.name, this.key, this.numberOfQuestion});
+  Quiz({this.name, this.key, this.numberOfQuestion});
 
   factory Quiz.fromJson(Map<String, dynamic> json, String key) {
     return Quiz(
-        creator: json['Creator'],
         name: json['Name'],
         numberOfQuestion: json['NumberOfQuestion'],
         key: key);
@@ -65,18 +61,17 @@ class User {
 
 class SaveGame {
   final String quizID;
-  final int doneQ;
-  final bool isDone;
+  final List<dynamic> listAns;
   final String userID;
-  final Map<String, AnswerData> ansData;
+  final String key;
 
-  SaveGame({this.quizID, this.doneQ, this.isDone, this.userID, this.ansData});
-  factory SaveGame.fromJson(Map<String, dynamic> json) {
+  SaveGame({this.quizID, this.listAns, this.userID, this.key});
+  factory SaveGame.fromJson(Map<String, dynamic> json, String key) {
     return SaveGame(
         quizID: json["QuizID"],
-        doneQ: json["DoneQuest"],
-        isDone: json["QuizDone"],
-        ansData: jsonDecode(json["MapQuest"]));
+        listAns: json["ListAnsweredQuest"],
+        userID: json["UserID"],
+        key: key);
   }
 }
 
@@ -84,4 +79,23 @@ class AnswerData {
   final int chooseAns;
   final int correctAns;
   AnswerData({this.chooseAns, this.correctAns});
+}
+
+class DoneQuiz {
+  final String quizID;
+  final int wrongAns;
+  final int correctAns;
+  final String userID;
+  final String key;
+  DoneQuiz(
+      {this.quizID, this.wrongAns, this.correctAns, this.userID, this.key});
+
+  factory DoneQuiz.fromJson(Map<String, dynamic> json, String key) {
+    return DoneQuiz(
+        quizID: json["QuizID"],
+        wrongAns: json["WrongAns"],
+        correctAns: json["RightAns"],
+        userID: json["UserID"],
+        key: key);
+  }
 }

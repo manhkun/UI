@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/bloC/topic/topic_bloc.dart';
-import 'package:quiztest/services/api_manager.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:quiztest/services/redux/reducer.dart';
 import 'package:quiztest/views/setting/setting.dart';
+import 'package:redux/redux.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
 import 'views/activity/activity.dart';
 import 'package:quiztest/services/user.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'views/challenge/join_screen.dart';
+const userName = "User Name";
 
 void main() {
-  runApp(MyApp());
+  final store =
+      Store<String>(AppReducer().changeUserName, initialState: userName);
+  runApp(StoreProvider(
+    store: store,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +38,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  final tabs = [HomePageBloc(), Search(), Activity(), Setting()];
+  final tabs = [HomePage(), Search(), Activity(), Setting()];
 
   @override
   void initState() {
@@ -94,20 +101,6 @@ class _HomeState extends State<Home> {
               ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-}
-
-class HomePageBloc extends StatelessWidget {
-  const HomePageBloc({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TopicBloc(api: API_Manager()),
-      child: HomePage(),
     );
   }
 }

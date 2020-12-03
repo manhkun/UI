@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiztest/services/user.dart';
+import 'package:quiztest/views/challenge/join_screen.dart';
 import 'package:quiztest/views/components/quiz_list.dart';
 import '../components/appbar.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiztest/bloC/topic/topic_bloc.dart';
-import 'package:quiztest/bloC/topic/topic_event.dart';
-import 'package:quiztest/bloC/topic/topic_state.dart';
 
-bool isAPICall = false;
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  TopicBloc topicBloc;
+  var _init = true;
+  var _isLoading = false;
+  String userID;
+  List<Topic> listTopic;
 
   @override
-  void initState() {
-    super.initState();
-    if (!isAPICall) {
-      topicBloc = BlocProvider.of<TopicBloc>(context);
-      topicBloc.add(FetchTopicEvent());
-      isAPICall = true;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_init) {
+      setState(() {
+        _isLoading = true;
+      });
+      API_Manager().fetchTopic().then((value) => listTopic = value).then((_) {
+        print("length topic" + listTopic.length.toString());
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
+    _init = false;
   }
 
   @override
@@ -40,53 +46,35 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(children: [
             EnterCode(),
-            BlocListener(
-              cubit: topicBloc,
-              listener: (context, state) {
-                if (state is TopicErrorState) {
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text(state.message)));
-                }
-              },
-              child: BlocBuilder<TopicBloc, TopicState>(
-                cubit: topicBloc,
-                builder: (context, state) {
-                  if (state is TopicInitState) {
-                    print("Init state");
-                    return SpinKitDualRing(color: Colors.blue);
-                  } else if (state is TopicLoadingState) {
-                    print("loading state");
-                    return SpinKitDualRing(color: Colors.blue);
-                  } else if (state is TopicLoadedState) {
-                    print("Loaded state");
-                    List<Topic> topics = state.topics ?? [];
-                    return ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: topics.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          Topic topic = topics[index];
-                          return ListQuiz(
-                            topic: topic,
-                            size: size,
-                          );
-                        });
-                  } else if (state is TopicErrorState) {
-                    return Text(state.message);
-                  }
-                },
-              ),
-            )
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: listTopic.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      Topic topic = listTopic[index];
+                      return ListQuiz(
+                        topic: topic,
+                        size: size,
+                      );
+                    }),
           ]),
         ));
   }
 }
 
-class EnterCode extends StatelessWidget {
-  const EnterCode({
-    Key key,
-  }) : super(key: key);
+class EnterCode extends StatefulWidget {
+  const EnterCode({Key key}) : super(key: key);
 
+  @override
+  _EnterCodeState createState() => _EnterCodeState();
+}
+
+class _EnterCodeState extends State<EnterCode> {
+  var _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -109,6 +97,7 @@ class EnterCode extends StatelessWidget {
             height: 30,
             margin: EdgeInsets.only(bottom: 10),
             child: TextField(
+              controller: _controller,
               onChanged: (value) {},
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(top: 5, left: 20),
@@ -126,7 +115,19 @@ class EnterCode extends StatelessWidget {
                 color: Color.fromRGBO(146, 61, 199, 1),
                 borderRadius: BorderRadius.circular(5)),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () async {
+                await API_Manager().joinGame(_controller.text).then((value) {
+                  print(value);
+                  if (value == "success") {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => JoinScreen(
+                                  hostCode: _controller.text,
+                                )));
+                  }
+                }).catchError((e) => print(e));
+              },
               child: Text(
                 "Join a game",
                 style: TextStyle(fontSize: 14, color: Colors.white),
